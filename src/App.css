@@ -1,0 +1,75 @@
+.App {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.filter {
+  margin-bottom: 20px;
+}
+
+.filter input {
+  padding: 5px;
+  margin-left: 10px;
+}
+
+.cocktail-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.cocktail-item {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  width: calc(33.333% - 20px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cocktail-item h2 {
+  margin: 0 0 10px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 0.8em;
+}
+
+.alcoholic {
+  background-color: #d9534f;
+}
+
+.non-alcoholic {
+  background-color: #5bc0de;
+}
+
+.container {
+  display: flex;
+  align-items: center; /* Vertically centers the items */
+  padding: 10px;
+}
+
+.image-container {
+  flex: 0 0 auto; /* Do not allow the image to grow or shrink */
+  margin-right: 20px; /* Space between image and details */
+}
+
+.image-container img {
+  max-width: 350px; /* Adjust size as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.details-container {
+  flex: 1; /* Allow the details to grow and take remaining space */
+}
+
+.details-container h2 {
+  margin: 0; /* Remove default margin */
+}
+
+.details-container p {
+  margin: 5px 0 0 0; /* Adjust margin as needed */
+}
