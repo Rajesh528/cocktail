@@ -1,21 +1,24 @@
 import { Link } from "react-router-dom";
 
-const Cocktails = ({ cocktails }) => {
+const Cocktails = (props ) => {
  
 
  const toggleFavorite = (id,flag)=>{
-// need api to make this
+let index = props.cocktails.findIndex(obj=>obj.id == id);
+if(index){
+props.updateData(index,flag);
+}
   }
 
   return (
     <div className="cocktail-list">
-      {cocktails.map((cocktail, index) => (
+      {props.cocktails.map((cocktail, index) => (
         <div key={index} className="cocktail-item">
           <Link to={`/cocktailDetails/${cocktail.id}`}>
             <h2>{cocktail.name}</h2>
           </Link>
-          {cocktail.isFavourite && <span onClick={()=>toggleFavorite(cocktail.id, false)}>⭐</span>}
-          {!cocktail.isFavourite && <span onClick={()=>toggleFavorite(cocktail.id, true)} >☆</span>}
+          {cocktail.isFavourite && <span onClick={(event)=>toggleFavorite(cocktail.id, false)} className="hand">⭐</span>}
+          {!cocktail.isFavourite && <span onClick={(event)=>toggleFavorite(cocktail.id, true)} className="hand">☆</span>}
 
           <p>{cocktail.ingredients}</p>
           <span
@@ -34,17 +37,4 @@ const Cocktails = ({ cocktails }) => {
 };
 export default Cocktails;
 
-// const [searchTerm, setSearchTerm] = useState('');
 
-//⭐ ☆
-
-// const filteredCocktailss = Cocktailss.filter(Cocktails =>
-//   Cocktails.name.toLowerCase().includes(searchTerm.toLowerCase())
-// );
-
-// return (
-//   <div className="App">
-//     {/* <Filter setSearchTerm={setSearchTerm} />
-//     <CocktailsList Cocktailss={filteredCocktailss} /> */}
-//   </div>
-// );

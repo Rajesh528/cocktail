@@ -73,3 +73,7 @@
 .details-container p {
   margin: 5px 0 0 0; /* Adjust margin as needed */
 }
+
+.hand{
+  cursor:pointer;
+}

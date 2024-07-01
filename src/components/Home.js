@@ -8,87 +8,51 @@ const HomeComponent = () => {
   const [cocktails, setCocktails] = useState([]);
   const [filterCocktails, setFilterCocktails] = useState([]);
   useEffect(() => {
-    axios
-      .get("./data.json")
-      .then((response) => {
-        setCocktails(response.data.cocktails);
-        setFilterCocktails(response.data.cocktails);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const storedData = localStorage.getItem("data");
+    if (storedData) {
+      setCocktails(JSON.parse(storedData));
+      setFilterCocktails(JSON.parse(storedData));
+    } else {
+      axios
+        .get("./data.json")
+        .then((response) => {
+          setCocktails(response.data.cocktails);
+          setFilterCocktails(response.data.cocktails);
+          localStorage.setItem("data", JSON.stringify(response.data.cocktails));
+          console.log("called");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }, []);
 
   useEffect(() => {
-   
-
     const data = cocktails.filter((obj) =>
       obj.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilterCocktails(data);
   }, [cocktails, searchTerm]);
+  const updateData = (id, flag) => {
+    const data = JSON.parse(localStorage.getItem("data"));
+
+    const updatedData = data.map((item) =>
+      item.id === id ? { ...item, isFavourite: flag } : item
+    );
+    localStorage.setItem("data", JSON.stringify(updatedData));
+    //   //setCocktails(updateData);
+    //   setFilterCocktails(updateData);
+  };
 
   return (
     <div className="App">
       <SearchComponent setSearchTerm={setSearchTerm}> </SearchComponent>
-      <CocktailsComponent cocktails={filterCocktails}></CocktailsComponent>
-
+      <CocktailsComponent
+        cocktails={filterCocktails}
+        updateData={updateData}
+      ></CocktailsComponent>
     </div>
   );
 };
 
 export default HomeComponent;
-
-// const Home = () => {
-//   const [searchTerm, setSearchTerm] = useState("");
-
-//   const cocktails = [
-//     {
-//       id: 1,
-//       name: "Afterglow",
-//       ingredients: "Grenadine | Orange juice | Pineapple juice",
-//       type: "Non alcoholic",
-//     },
-//     {
-//       id: 2,
-//       name: "Smut",
-//       ingredients: "Red wine | Peach schnapps | Pepsi Cola | Orange juice",
-//       type: "Alcoholic",
-//     },
-//     {
-//       id: 3,
-//       name: "Affinity",
-//       ingredients: "Scotch | Sweet Vermouth | Dry Vermouth | Orange bitters",
-//       type: "Alcoholic",
-//     },
-//     {
-//       id: 4,
-//       name: "Sweet Tooth",
-//       ingredients: "Godiva liqueur | Milk",
-//       type: "Alcoholic",
-//     },
-//     {
-//       id: 5,
-//       name: "Sherry Flip",
-//       ingredients: "Sherry | Light cream | Powdered sugar | Egg | Nutmeg",
-//       type: "Alcoholic",
-//     },
-//     {
-//       id: 6,
-//       name: "Almeria",
-//       ingredients: "Dark rum | Kahlua | Egg white",
-//       type: "Alcoholic",
-//     },
-//   ];
-
-//   const filteredCocktails = cocktails.filter((obj) =>
-//     obj.name.toLowerCase().includes(searchTerm.toLowerCase())
-//   );
-//   return (
-//     <>
-//       <SearchComponent setSearchTerm={setSearchTerm}></SearchComponent>
-//       <Cocktails cocktails={filteredCocktails}></Cocktails>
-//     </>
-//   );
-// };
-// export default Home;
