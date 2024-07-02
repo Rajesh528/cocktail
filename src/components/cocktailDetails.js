@@ -6,20 +6,21 @@ const CocktailDetails = () => {
   const { id } = useParams();
   const [cocktail, setCocktail] = useState({});
   useEffect(() => {
-    axios
-      .get("../data.json")
-      .then((response) => {
-
-        let data = response.data.cocktails;
-        let index = data.findIndex((item) => item.id == id);
-        setCocktail(data[index]);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const res = JSON.parse(localStorage.getItem("data"));
+    const index = res.findIndex(obj=>obj.id == id);
+    setCocktail(res[index]);
   }, []);
 
-  const toggleFavorite = (index, flag) => {};
+  const toggleFavorite = (index, flag) => {
+      const data = JSON.parse(localStorage.getItem("data"));
+  
+      const updatedData = data.map((item) =>
+        item.id === id ? { ...item, isFavourite: flag } : item
+      );
+      localStorage.setItem("data", JSON.stringify(updatedData));
+    
+    setCocktail({ ...cocktail, isFavourite: flag })
+  };
   return (
     <div className="container">
       <div className="image-container">

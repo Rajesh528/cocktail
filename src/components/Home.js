@@ -19,7 +19,6 @@ const HomeComponent = () => {
           setCocktails(response.data.cocktails);
           setFilterCocktails(response.data.cocktails);
           localStorage.setItem("data", JSON.stringify(response.data.cocktails));
-          console.log("called");
         })
         .catch((error) => {
           console.log(error);
@@ -40,8 +39,7 @@ const HomeComponent = () => {
       item.id === id ? { ...item, isFavourite: flag } : item
     );
     localStorage.setItem("data", JSON.stringify(updatedData));
-    //   //setCocktails(updateData);
-    //   setFilterCocktails(updateData);
+  setCocktails(updatedData);
   };
 
   return (
